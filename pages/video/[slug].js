@@ -44,6 +44,18 @@ export const getServerSideProps = async (pageContext) => {
     },
   };
 };
+
+// change to video to seen function
+
+const changeToSeen = async (slug) => {
+  await fetch("/api/changeToSeen", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ slug }),
+  });
+};
 const Video = ({ video }) => {
   const [watching, setWatching] = useState(false);
   return (
@@ -65,6 +77,7 @@ const Video = ({ video }) => {
           <button
             className="playButton"
             onClick={() => {
+              changeToSeen(video.slug);
               watching ? setWatching(false) : setWatching(true);
             }}
           >

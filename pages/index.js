@@ -3,8 +3,7 @@ import Navbar from "../components/Navbar";
 import Section from "../components/Section";
 
 const token = process.env.GRAPHSMC_TOKEN;
-const url =
-  "https://api-eu-west-2.graphcms.com/v2/cl1gclawa41lx01xfefn49zu3/master";
+const url = process.env.ENDPOINT;
 
 export const getStaticProps = async () => {
   const graphQLClient = new GraphQLClient(url, {
@@ -68,11 +67,12 @@ const Home = ({ videos, account }) => {
 
   // filter videos by seen
   const unSeenVideos = (videos) => {
-    return videos.filter(
-      (video) => video.seen === false || video.seen === null
-    );
+    return videos.filter((video) => video.seen == false || video.seen == null);
   };
-
+  console.log(
+    "not seen",
+    videos.filter((video) => video.seen == false || video.null)
+  );
   return (
     <>
       <Navbar account={account} />
@@ -86,9 +86,9 @@ const Home = ({ videos, account }) => {
         <div className="video-feed">
           <Section
             genre={"Recommended for You"}
-            videos={filter(videos, "comedy")}
+            videos={unSeenVideos(videos)}
           />
-          <Section genre={"Comedy"} videos={unSeenVideos(videos)} />
+          <Section genre={"Comedy"} videos={filter(videos, "comedy")} />
           <Section genre={"True Story"} videos={filter(videos, "true story")} />
           <Section genre={"TV Show"} videos={filter(videos, "tv show")} />
           <Section genre={"Thriller"} videos={filter(videos, "thriller")} />
