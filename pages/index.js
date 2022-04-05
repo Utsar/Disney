@@ -73,6 +73,12 @@ const Home = ({ videos, account }) => {
     "not seen",
     videos.filter((video) => video.seen == false || video.null)
   );
+
+  // filters videos for watch again
+
+  const seenVideos = (videos) => {
+    return videos.filter((video) => video.seen == true);
+  };
   return (
     <>
       <Navbar account={account} />
@@ -88,6 +94,7 @@ const Home = ({ videos, account }) => {
             genre={"Recommended for You"}
             videos={unSeenVideos(videos)}
           />
+          <Section genre={"Watch again"} videos={seenVideos(videos)} />
           <Section genre={"Comedy"} videos={filter(videos, "comedy")} />
           <Section genre={"True Story"} videos={filter(videos, "true story")} />
           <Section genre={"TV Show"} videos={filter(videos, "tv show")} />
