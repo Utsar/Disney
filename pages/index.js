@@ -1,4 +1,5 @@
 import { gql, GraphQLClient } from "graphql-request";
+import Section from "../components/Section";
 
 const token = process.env.GRAPHSMC_TOKEN;
 const url =
@@ -39,7 +40,35 @@ export const getStaticProps = async () => {
   };
 };
 const Home = ({ videos }) => {
-  console.log(videos);
-  return <div>hello</div>;
+  // get random videos to display
+  const randomVideo = (videos) => {
+    return videos[Math.floor(Math.random() * videos.length)];
+  };
+
+  // filter videos by genre
+  const filter = (videos, genre) => {
+    return videos.filter((video) => video.tags.includes(genre));
+  };
+  return (
+    <>
+      <div className="app">
+        <div className="main-video">
+          <img
+            src={randomVideo(videos).thumbnail.url}
+            alt={randomVideo(videos).title}
+          />
+        </div>
+        <div className="video-feed">
+          <Section genre={"Comedy"} videos={filter(videos, "comedy")} />
+          <Section genre={"True Story"} />
+          <Section genre={"TV Show"} />
+          <Section genre={"Thriller"} />
+          <Section genre={"Classic"} />
+          <Section genre={"Drama"} />
+          <Section genre={"Documentary"} />
+        </div>
+      </div>
+    </>
+  );
 };
 export default Home;
